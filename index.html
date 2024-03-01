@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="page.css">
+</head>
+<body>
+       <div class="box">
+            <div class="search">
+            <input type="text" id="name" placeholder="enter the city neme" spellcheck="false">
+            <button onclick="search()"><img src="images/search.png"></button>
+            <p id="result"></p>
+            </div>
+         
+            <div class="westher">
+                <img id="images" src="images/rain.png" class="westher-icon">
+                <h1 id="temp" class="temp">22 </h1>
+                <h2  id="city"class="city"> Naw york</h2>    
+            </div>
+
+            <div class="row" style="margin-top: 10%;">
+                <div class="col">
+                     <div class="left">
+                        <img src="images/humidity.png">
+                     </div>
+                     <div class="right">
+                        <span id="humidity">64%</span>
+                        <br>
+                        <span id="">humidity</span>
+                     </div>
+                </div>
+
+                <div class="col">
+                    <div class="left">
+                       <img  src="images/wind.png">
+                    </div>
+                    <div class="right">
+                       <span id="wind">15Km/h</span>
+                       <br>
+                       <span id="">Wind Speed</span>
+                    </div>
+               </div>
+                
+             </div>
+        </div>
+       
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+               <script>
+                function search(){
+                    var name=document.getElementById("name").value;
+                   
+                   // alert("you");
+                    $.ajax({
+                        url:"https://api.openweathermap.org/data/2.5/weather?q="+name+"&appid=da2760bdda059f6e6d1941e98044c005&units=metric",
+                        method:"post",
+                        data:{},
+                        success:function(response)
+                        {
+                            console.log(68, response)
+                            document.getElementById("city").innerHTML=response.name;
+                            document.getElementById("temp").innerHTML = response.main.temp+"<sup>o</sup>c";
+                            document.getElementById("humidity").innerHTML=response.main.humidity+"%";
+                            document.getElementById("wind").innerHTML=response.wind.speed+" km/h";
+
+                            if(response.weather[0].description == "mist")
+                            {
+                                document.getElementById('images').src = "images/mist.png";
+                            }
+                            else if(response.weather[0].description=="rain"){
+                                document.getElementById('images').src="images/rain.png";
+
+                            }
+                            else if(response.weather[0].description=="snow"){
+                                document.getElementById('images').src="images/snow.png";
+
+                            }
+                            else if(response.weather[0].description=="drizzle"){
+                                document.getElementById('images').src="images/drizzle.png";
+                            }
+                            else if(response.weather[0].description == "clear")
+                            {
+                                document.getElementById('images').src = "images/clear.png";
+                            }
+                            else if(response.weather[0].description == "clouds")
+                            {
+                                document.getElementById('images').src = "images/clouds.png";
+                            }
+                            else
+                            {
+                                document.getElementById('images').src="images/clear.png"
+                            }
+
+                        }
+                    })
+
+                }
+               </script>
+        
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+</body>
+</html>
